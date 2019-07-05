@@ -1,0 +1,9 @@
+{
+  "globalDependencies": {
+    "immutable": "registry:dt/immutable#3.8.1+20161028131303",
+    "react-intl": "registry:dt/react-intl#2.2.1+20170323145511",
+    "redux": "registry:dt/redux#3.5.2+20160703092728",
+    "redux-saga": "registry:dt/redux-saga#0.9.1+20160703120921",
+    "reselect": "registry:dt/reselect#2.0.2+20160510002910"
+  }
+}
