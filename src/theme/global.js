@@ -16,9 +16,9 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-size: 1.6rem;
+    padding-left: 150px;
     font-family: ${font.primaryFont}, sans-serif;
     border: 0;
-    padding: 0;
     margin: 0;
     position: relative;
 
@@ -26,7 +26,6 @@ const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4 {
     margin: 0;
-    text-transform: uppercase;
   }
 
   * {

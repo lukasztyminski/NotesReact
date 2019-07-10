@@ -8,7 +8,9 @@ const ButtonIcon = styled.button`
   border: none;
   background: url(${({ icon }) => icon}) no-repeat center;
   background-size: 40%;
-  background-color: ${({ active }) => (active ? '#FFFFFF' : 'transparent')};
+  &.active {
+    background-color: ${({ theme }) => theme.white};
+  }
 `;
 
 export default ButtonIcon;

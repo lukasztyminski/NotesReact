@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { Redirect } from 'react-router-dom';
 import Paragraph from 'components/atoms/Paragraph';
 import Button from 'components/atoms/Button';
 
@@ -13,32 +13,54 @@ import {
   StyledLinkButton,
 } from './style';
 
-const Card = ({ cardType }) => (
-  <StyledWrapper>
-    <InnerWrapper activeColor={cardType}>
-      <StyledHeading>Hello Łukasz</StyledHeading>
-      <DateInfo>3 days</DateInfo>
-      {cardType === 'twitters' && <StyledAvatar src="https://avatars.io/default_128.jpg" />}
-      {cardType === 'articles' && (
-        <StyledLinkButton target="_blank" href="https://www.facebook.com/tyminskilukasz" />
-      )}
-    </InnerWrapper>
-    <InnerWrapper flex>
-      <Paragraph>
-        Lorem Quis Lorem laborum deserunt reprehenderit laboris deserunt laborum irure elit dolore
-        tempor. Ipsum inc et ea elit quis. Commodo officia et amet sunt adipisicing consequat dolor.
-      </Paragraph>
-      <Button remove>Remove</Button>
-    </InnerWrapper>
-  </StyledWrapper>
-);
+class Card extends Component {
+  state = {
+    redirect: false,
+  };
+
+  handleCardClick = () => this.setState({ redirect: true });
+
+  render() {
+    const { id, cardType, title, created, twitterName, articleUrl, content } = this.props;
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to={`${cardType}/${id}`} />;
+    }
+
+    return (
+      <StyledWrapper onClick={this.handleCardClick}>
+        <InnerWrapper activeColor={cardType}>
+          <StyledHeading>{title}</StyledHeading>
+          <DateInfo>{created}</DateInfo>
+          {cardType === 'twitters' && (
+            <StyledAvatar src={`https://avatars.io/twitter/${twitterName}`} />
+          )}
+          {cardType === 'articles' && <StyledLinkButton target="_blank" href={articleUrl} />}
+        </InnerWrapper>
+        <InnerWrapper flex>
+          <Paragraph>{content}</Paragraph>
+          <Button remove>Remove</Button>
+        </InnerWrapper>
+      </StyledWrapper>
+    );
+  }
+}
 
 Card.propTypes = {
   cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  created: PropTypes.string.isRequired,
+  twitterName: PropTypes.string,
+  articleUrl: PropTypes.string,
+  content: PropTypes.string.isRequired,
 };
 
 Card.defaultProps = {
   cardType: 'notes',
+  twitterName: null,
+  articleUrl: null,
 };
 
 export default Card;
