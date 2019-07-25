@@ -9,6 +9,7 @@ import penIcon from 'assets/icons/pen.svg';
 import twitterIcon from 'assets/icons/twitter.svg';
 import ButtonIcon from 'components/atoms/ButtonIcon';
 import { routes } from 'routes';
+import withContext from 'hoc/withContext';
 import { WrapSidebar, WrapMenuLink } from './style';
 
 const LogoIcon = styled(NavLink)`
@@ -26,8 +27,8 @@ const BigIcon = styled(ButtonIcon)`
   background-size: 50%;
 `;
 
-const Sidebar = ({ pageType }) => (
-  <WrapSidebar activeColor={pageType}>
+const Sidebar = ({ pageContext }) => (
+  <WrapSidebar activeColor={pageContext}>
     <LogoIcon to={routes.notes} />
     <WrapMenuLink>
       <li>
@@ -45,7 +46,11 @@ const Sidebar = ({ pageType }) => (
 );
 
 Sidebar.propTypes = {
-  pageType: PropTypes.string.isRequired,
+  pageContext: PropTypes.string,
 };
 
-export default Sidebar;
+Sidebar.defaultProps = {
+  pageContext: 'notes',
+};
+
+export default withContext(Sidebar);

@@ -1,44 +1,61 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Heading from 'components/atoms/Heading';
 import Input from 'components/atoms/Input';
-import Paragraph from 'components/atoms/Paragraph';
 import UserPageTemplate from 'templates/UserPageTemplate';
-import { PageWrapper, GridWrapper, PageHeader } from './style';
+import withContext from 'hoc/withContext';
+import plusIcon from 'assets/icons/plus.svg';
+import NewItemBar from 'components/organisms/NewItemBar';
+import {
+  PageWrapper,
+  GridWrapper,
+  PageHeader,
+  StyledHeading,
+  StyledParagraph,
+  StyledButtonIcon,
+} from './style';
 
-const StyledHeading = styled(Heading)`
-  margin: 25px 0 0;
-  &::first-letter {
-    text-transform: uppercase;
+class GridTemplate extends Component {
+  state = {
+    isNewItemBarVisible: false,
+  };
+
+  toggleNewItemBar = () => {
+    this.setState(prevState => ({
+      isNewItemBarVisible: !prevState.isNewItemBarVisible,
+    }));
+  };
+
+  render() {
+    const { children, pageContext } = this.props;
+    const { isNewItemBarVisible } = this.state;
+    return (
+      <UserPageTemplate>
+        <PageWrapper>
+          <PageHeader>
+            <Input placeholder="Search" search />
+            <StyledHeading big>{pageContext}</StyledHeading>
+            <StyledParagraph>6 {pageContext}</StyledParagraph>
+          </PageHeader>
+          <GridWrapper>{children}</GridWrapper>
+          <StyledButtonIcon
+            onClick={this.toggleNewItemBar}
+            activeColor={pageContext}
+            icon={plusIcon}
+          />
+          <NewItemBar handleClose={this.toggleNewItemBar} isVisible={isNewItemBarVisible} />
+        </PageWrapper>
+      </UserPageTemplate>
+    );
   }
-`;
-
-const StyledParagraph = styled(Paragraph)`
-  margin: 0;
-  font-weight: ${({ theme }) => theme.bold};
-`;
-
-const GridTemplate = ({ children, pageType }) => (
-  <UserPageTemplate pageType={pageType}>
-    <PageWrapper>
-      <PageHeader>
-        <Input placeholder="Search" search />
-        <StyledHeading big>{pageType}</StyledHeading>
-        <StyledParagraph>6 notes</StyledParagraph>
-      </PageHeader>
-      <GridWrapper>{children}</GridWrapper>
-    </PageWrapper>
-  </UserPageTemplate>
-);
+}
 
 GridTemplate.propTypes = {
   children: PropTypes.instanceOf(Array).isRequired,
-  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageContext: PropTypes.string,
 };
 
 GridTemplate.defaultProps = {
-  pageType: 'notes',
+  pageContext: 'notes',
 };
 
-export default GridTemplate;
+export default withContext(GridTemplate);

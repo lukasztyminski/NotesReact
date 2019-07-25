@@ -6,3 +6,7 @@ const Heading = styled.h1`
 `;
 
 export default Heading;
+
+export const H2 = styled.h2`
+  font-size: ${({ theme, big }) => (big ? theme.fontSize.xl : theme.fontSize.l)};
+`;

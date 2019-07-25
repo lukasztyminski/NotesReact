@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 const Button = styled.button`
-  background: ${({ theme }) => theme.notes};
+  background-color: ${({ pageType, theme }) => (pageType ? theme[pageType] : theme.white)};
   width: ${({ width }) => width || '220px'};
   height: 47px;
   border: none;

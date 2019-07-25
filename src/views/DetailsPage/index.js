@@ -27,17 +27,27 @@ class DetailsPage extends Component {
   }
 
   render() {
-    const { match } = this.props;
+    const dummyArticle = {
+      id: 1,
+      title: 'Hello Roman',
+      content:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
+      created: '1 day',
+      articleUrl: 'https://youtube.com/helloroman',
+      twitterName: 'hello_roman',
+    };
+
     const { pageType } = this.state;
 
     return (
-      <>
-        <DetailsTemplate pageType={pageType}>
-          <p>{`is twitter: ${match.path === routes.twitter}`} </p>
-          <p>{`is note: ${match.path === routes.note}`} </p>
-          <p>{`is article: ${match.path === routes.article}`} </p>
-        </DetailsTemplate>
-      </>
+      <DetailsTemplate
+        pageType={pageType}
+        title={dummyArticle.title}
+        created={dummyArticle.created}
+        content={dummyArticle.content}
+        articleUrl={dummyArticle.articleUrl}
+        twitterName={dummyArticle.twitterName}
+      />
     );
   }
 }

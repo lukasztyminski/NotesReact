@@ -2,25 +2,54 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import UserPageTemplate from 'templates/UserPageTemplate';
+import { H2 } from 'components/atoms/Heading';
+import { DateInfo, StyledAvatar, StyledLinkButton } from 'components/molecules/Card/style';
+import Button from 'components/atoms/Button';
+import Paragraph from 'components/atoms/Paragraph';
+import withContext from 'hoc/withContext';
+import { DetailsWrap } from './style';
 
-const DetailsTemplate = ({ children, pageType }) => {
+const DetailsTemplate = ({ pageContext, title, created, content, articleUrl, twitterName }) => {
   return (
     <>
-      <UserPageTemplate pageType={pageType}>
-        {children}
-        <Link to="/">Go back</Link>
+      <UserPageTemplate>
+        <DetailsWrap>
+          <H2 big>{title}</H2>
+          <DateInfo>{created}</DateInfo>
+          {pageContext === 'twitters' && (
+            <StyledAvatar
+              style={{ position: 'absolute' }}
+              src={`https://avatars.io/twitter/${twitterName}`}
+            />
+          )}
+          {pageContext === 'articles' && (
+            <StyledLinkButton style={{ position: 'absolute' }} target="_blank" href={articleUrl} />
+          )}
+          <Paragraph style={{ maxWidth: 900 }}>{content}</Paragraph>
+          <Link to="/">
+            <Button pageType={pageContext}>Save/close</Button>
+          </Link>
+        </DetailsWrap>
       </UserPageTemplate>
     </>
   );
 };
 
 DetailsTemplate.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.node]).isRequired,
-  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageContext: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  created: PropTypes.string,
+  content: PropTypes.string,
+  articleUrl: PropTypes.string,
+  twitterName: PropTypes.string,
 };
 
 DetailsTemplate.defaultProps = {
-  pageType: 'notes',
+  title: '',
+  created: '',
+  content: '',
+  articleUrl: '',
+  twitterName: '',
 };
 
-export default DetailsTemplate;
+export default withContext(DetailsTemplate);

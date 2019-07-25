@@ -13,6 +13,7 @@ const Input = styled.input`
     text-transform: uppercase;
     letter-spacing: 1px;
     color: ${({ theme }) => theme.grey300};
+    font-size: ${({ theme }) => theme.fontSize.s};
   }
 
   ${({ search, theme }) =>
