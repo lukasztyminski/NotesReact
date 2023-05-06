@@ -16,7 +16,7 @@
     "react-intl": "^2.9.0",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "2.1.8",
+    "react-scripts": "5.0.1",
     "reduce-reducers": "^1.0.4",
     "redux": "^4.0.1",
     "redux-create-reducer": "^2.0.0",
